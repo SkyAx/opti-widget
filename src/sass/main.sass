@@ -1,3 +1,83 @@
-.opti-widget-container
-  width: 100%
-  padding: 30px
+@import "variables"
+
+.opti-widget
+
+  &-container
+    box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.2), 4px 4px 8px rgba(0, 0, 0, 0.1)
+    border-radius: 3px
+    box-sizing: border-box
+    width: 100%
+    padding: 30px
+
+    *
+      box-sizing: border-box
+
+  &-form
+    display: flex
+    justify-content: space-between
+    flex-wrap: wrap
+    align-items: start
+
+  &-input
+    min-width: 140px
+    line-height: $line-height
+    padding: $default-padding
+    background: #fff
+    color: #0f0f0f
+    outline: none
+    font-size: $font-size
+    font-weight: normal
+    border: 1px solid transparent
+    border-radius: 20px
+    margin-right: 40px
+    box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.2), 4px 4px 8px rgba(0, 0, 0, 0.1)
+
+    ::-webkit-input-placeholder
+      color: $placeholder-color
+
+    :-ms-input-placeholder
+      color: $placeholder-color
+
+    ::placeholder
+      color: $placeholder-color
+
+    &.focused, &:focus
+      color: $placeholder-color
+      border-color: $focus-color
+      box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.2), 4px 4px 8px rgba(249, 200, 25, 0.1)
+
+    &.valid
+      border-color: $green
+
+    &.time
+      width: 120px
+      min-width: 0
+
+    @media all and (max-width: 768px)
+      .opti-widget-input
+        &:not(:last-child)
+          margin-bottom: 20px
+
+  &-button
+    padding: $default-padding $default-padding * 2
+    border-radius: $border-radius
+    color: #fff
+    font-size: $font-size
+    font-weight: 500
+    font-style: normal
+    line-height: $line-height
+    border: none
+    box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.7), 4px 4px 8px rgba(0, 0, 0, 0.1)
+    cursor: pointer
+    min-height: 32px
+    outline: none
+    background: $green
+
+    &.active, &:active
+      box-shadow: inset -4px -4px 16px rgba(255, 255, 255, 0.2), inset 4px 4px 16px rgba(0, 0, 0, 0.2)
+
+.help-block.form-error
+  font-size: $font-size - 4
+  line-height: $line-height - 4
+  margin-top: $default-padding
+  color: $error

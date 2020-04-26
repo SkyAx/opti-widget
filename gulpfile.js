@@ -39,6 +39,7 @@ function js() {
     return gulp
         .src([
             './node_modules/jquery/dist/jquery.min.js',
+            './node_modules/inputmask/dist/jquery.inputmask.min.js',
             './node_modules/jquery-form-validator/form-validator/jquery.form-validator.js',
             './src/js/src/**/*.js'
         ])

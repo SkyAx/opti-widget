@@ -29,6 +29,7 @@
     "gulp-uglify": "^3.0.2"
   },
   "dependencies": {
+    "inputmask": "^5.0.3",
     "jquery": "^3.5.0",
     "jquery-form-validator": "^2.3.79"
   }
