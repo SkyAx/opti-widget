@@ -4,26 +4,29 @@
             widgetContainerClass: 'opti-widget-container',
             widgetInputClass: 'opti-widget-input',
             widgetInputButton: 'opti-widget-button',
-            errorMsg: 'Поле обязательно к заполнению'
+            timeout: 0
         };
 
         var options = $.extend({
-            buttonColor: '#ffa073',
-            backgroundColor: '#ffffff',
+            buttonBackground: '#2FB500',
+            widgetBackground: '#ffffff',
+            errorBorderColor: '#DD1519',
             widgetWidth: '100%',
             formClass: 'opti-widget-form',
-            inputsPlaceholders: {
-                from: 'Откуда',
-                to: 'Куда'
-            },
-            buttonText: 'Заказать'
+            inputFromText: 'Откуда',
+            inputToText: 'Куда',
+            errorMsg: 'Поле обязательно к заполнению',
+            buttonText: 'Заказать',
+            borderRadius: '0'
         }, options);
+
+        var address = "";
 
         function createWidget(context, form) {
             var widgetContainer = $('<div/>')
                 .addClass(defaults.widgetContainerClass)
                 .css({
-                    backgroundColor: options.backgroundColor,
+                    backgroundColor: options.widgetBackground,
                 });
 
             $(widgetContainer).append(form);
@@ -36,11 +39,14 @@
             var widgetForm = $('<form/>')
                 .addClass(options.formClass);
 
-            var inputFrom = createTextInput(options.inputsPlaceholders.from, defaults.errorMsg);
-            var inputTo = createTextInput(options.inputsPlaceholders.to, defaults.errorMsg);
+            var inputFrom = createTextInput(options.inputFromText, defaults.errorMsg);
+            var inputTo = createTextInput(options.inputToText, defaults.errorMsg);
 
             var inputTime = $('<input/>')
                 .addClass(defaults.widgetInputClass + ' time')
+                .css({
+                    borderRadius: options.borderRadius
+                })
                 .attr({
                     'type': 'text',
                     'placeholder': '00:00'
@@ -56,10 +62,14 @@
             var button = $('<button/>')
                 .addClass(defaults.widgetInputButton)
                 .text(options.buttonText)
+                .css({
+                    backgroundColor: options.buttonBackground,
+                    borderRadius: options.borderRadius
+                })
                 .attr({
                     'type': 'submit',
                     'value': options.buttonText,
-                    'placeholder': options.inputsPlaceholders.to
+                    'placeholder': options.buttonText
                 });
 
             $(widgetForm).append(inputFrom);
@@ -74,6 +84,9 @@
         function createTextInput(placeholder, errorMsg) {
             var input = $('<input/>')
                 .addClass(defaults.widgetInputClass)
+                .css({
+                    borderRadius: options.borderRadius
+                })
                 .attr({
                     'type': 'text',
                     'placeholder': placeholder,
@@ -81,19 +94,52 @@
                     'data-validation-error-msg-required': errorMsg
                 });
 
+            $(input).on('keydown', function (e) {
+                getAddressList(e.target.value);
+            });
+
             return input;
         }
 
         function initValidation(form) {
-            console.log($(form));
-
             $.validate({
                 form: $(form),
                 language: {
                     badCustomVal: defaults.errorMsg
                 },
-                borderColorOnError : '#DD1519',
+                borderColorOnError : options.errorBorderColor,
             })
+        }
+
+        function getAddressList(address) {
+            if (defaults.timeout) {
+                defaults.timeout = setTimeout(function() {
+                    $.ajax({
+                        url: 'https://otaxi.com.ua/api/search?input=$' + address + '&city=1',
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Authorization");
+                        },
+                        method: 'GET',
+                        success: function (res) {
+                            console.log(res);
+                        }
+                    });
+                }, 700);
+            } else {
+                var newAddress = address;
+                setTimeout(function() {
+                    $.ajax({
+                        url: 'https://otaxi.com.ua/api/search?input=' + newAddress + '&city=1',
+                        beforeSend: function(request) {
+                            request.setRequestHeader("Authorization", '');
+                        },
+                        method: 'GET',
+                        success: function (res) {
+                            console.log(res);
+                        }
+                    });
+                }, 700);
+            }
         }
 
         return this.each(function () {

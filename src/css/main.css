@@ -1,6 +1,5 @@
 .opti-widget-container {
   box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.2), 4px 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 3px;
   box-sizing: border-box;
   width: 100%;
   padding: 30px;
@@ -27,7 +26,6 @@
   font-size: 14px;
   font-weight: normal;
   border: 1px solid transparent;
-  border-radius: 20px;
   margin-right: 40px;
   box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.2), 4px 4px 8px rgba(0, 0, 0, 0.1);
   -ms-input-placeholder-color: #777777;
@@ -64,14 +62,13 @@
 
 .opti-widget-button {
   padding: 10px 20px;
-  border-radius: 20px;
   color: #fff;
   font-size: 14px;
   font-weight: 500;
   font-style: normal;
   line-height: 16px;
   border: none;
-  box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.7), 4px 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: -4px -4px 8px rgba(255, 255, 255, 0.2), 4px 4px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   min-height: 32px;
   outline: none;

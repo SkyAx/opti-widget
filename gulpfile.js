@@ -35,31 +35,37 @@ function css() {
         .pipe(browsersync.stream());
 }
 
-function js() {
+function jsLibs() {
     return gulp
         .src([
             './node_modules/jquery/dist/jquery.min.js',
             './node_modules/inputmask/dist/jquery.inputmask.min.js',
-            './node_modules/jquery-form-validator/form-validator/jquery.form-validator.js',
-            './src/js/src/**/*.js'
+            './node_modules/jquery-form-validator/form-validator/jquery.form-validator.js'
         ])
-        .pipe(concat('opti-widget.js'))
+        .pipe(concat('libs.js'))
         .pipe(rename({ suffix: ".min" }))
         .pipe(uglify())
-        .pipe(gulp.dest('./src/js/dist'))
-        .pipe(browsersync.stream());
+        .pipe(gulp.dest('./src/js/dist'));
+}
+
+function js() {
+    return gulp
+        .src('./src/js/src/**/*.js')
+        .pipe(concat('opti-widget.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('./src/js/dist'));
 }
 
 function watchFiles() {
     gulp.watch("./src/sass/**/*", css);
-    gulp.watch("./src/js/src/**/*", js);
+    gulp.watch("./src/js/src/**/*.js", js);
     gulp.watch("./src/js/dist/**/*", browserSyncReload);
     gulp.watch("./src/scripts/**/*", browserSyncReload);
 }
 
 
 const build = gulp.parallel(js, css);
-const watch = gulp.parallel(js, css, watchFiles, browserSync);
+const watch = gulp.parallel(jsLibs, js, css, watchFiles, browserSync);
 
 // export tasks
 exports.css = css;
